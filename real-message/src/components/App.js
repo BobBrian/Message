@@ -1,12 +1,17 @@
-import React from 'react';
-
+import React, {useState} from 'react'
+import Login from './Login'
 
 function App() {
+
+  // stores all the state for the Id that is shared all accross the application
+  const [id, setId] = useState()
+
   return (
-    <div >
-      Hello World
-    </div>
-  );
+      
+        <Login onIdSubmit={setId}/>
+      
+  )
 }
 
-export default App;
+export default App
+
