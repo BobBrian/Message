@@ -1,5 +1,6 @@
 import React from 'react'
 import useLocalStorage from '../hooks/useLocalStorage';
+import DashBoard from './DashBoard';
 import Login from './Login'
 
 function App() {
@@ -8,10 +9,9 @@ function App() {
   const [id, setId] = useLocalStorage()
 
   return(
-        <>
-          {id}
-          <Login onIdSubmit={setId}/>
-        </>
+
+         id ? <DashBoard id={id}/> : <Login onIdSubmit={setId}/> //Basically if we have an ID we will be Redirected to the DashBaord and If not
+         //we will be redirected to the login page
   )
 }
 
