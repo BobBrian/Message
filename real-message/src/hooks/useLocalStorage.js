@@ -19,7 +19,7 @@ export default function useLocalStorage(key, initialValue) {
     }
   })
 
-  //Use Effect is here so that once we've gotten our Value form LocalStorage we save it so it can be used and
+  //Use Effect is here so that once we've gotten our Value form LocalStorage we save it so it can be used again  and
   // if it is changed to overwrite the previous value and save the new one
   useEffect(() => {
     localStorage.setItem(prefixedKey, JSON.stringify(value))

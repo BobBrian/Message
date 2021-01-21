@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import {Tab,Nav,Button} from 'react-bootstrap' // used for Navigating the SideBar
+import {Tab,Nav,Button,Modal} from 'react-bootstrap' // used for Navigating the SideBar
 import Contact from './Contact';
 import Conversation from './Conversation';
+import NewContactModal from './NewContactModal';
+import NewConversationModal from './NewConversationModal';
 
 const CONVERSATION_KEY = 'conversation'; // These constants linked to event keys allows us to change tabs 
 const CONTACTS_KEY = 'contacts';
@@ -9,6 +11,14 @@ const CONTACTS_KEY = 'contacts';
 function SideBar({id}) {
     const [activeKey,setActiveKey] =useState(CONVERSATION_KEY) // Sets the Default Tab to conversation once the App Loads
     const conversationsOpen = activeKey === CONVERSATION_KEY
+    const [modalOpen, setModalOpen] = useState(false)
+
+    function closeModal()
+    {
+
+        setModalOpen(false)
+    }
+
 
 
 
@@ -38,11 +48,19 @@ function SideBar({id}) {
                     {/*Obviously Here to Display the Id asccociated with the Account*/}
                     Your ID :<span className="text-muted">{id}</span>
                 </div>
-                <Button>
+                <Button className="rounded-0" onClick={()=> setModalOpen(true)}>
                     {/*Used to Make New Conversation in the Messaging App*/}
-                    New{conversationsOpen ? 'Conversation':'Contact'}
+                    New{conversationsOpen ? 'Conversation':'Contact'} {/*Changes the Name of the Button based on the Tab Open*/}
                 </Button>
             </Tab.Container>
+            <Modal show={modalOpen} onHide={closeModal}>
+                {/*Aids int the Creation of Either New Conversations or New Contacts*/}
+                 {/*Close Modal Gives us the Ability to close our Conversation or Contact Windows*/}
+                {conversationsOpen ?
+                    <NewConversationModal closeModal={closeModal}/>:
+                    <NewContactModal closeModal={closeModal}/>
+                }
+            </Modal>
 
         </div>
     )
