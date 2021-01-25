@@ -11,7 +11,8 @@ export function useConversations(){
 
 export function ConversationsProvider({children}) {
 
-    const[conversations,SetConversations] = useLocalStorage('conversations',[]) // This will be the Array that all the contact information will be stored in
+    const[conversations,SetConversations] = useLocalStorage('conversations',[]) // This will be the Array that all the conversation
+    // information will be stored in
 
     //this fucntion below deals specifically with creating our contacts
     function createConversation(recipients){
@@ -24,9 +25,9 @@ export function ConversationsProvider({children}) {
         //The Provider is used to wrap around any code that needs access to the infomation in the context as shown in the App.js File
         // It has a Single Prop called value which represent what the context is.
         //Via the Provider we have access to the createContact function
-        <ConversationContext.Provider value={{conversations, createConversation}}>
+        <ConversationsContext.Provider value={{conversations, createConversation}}>
             {children}
-        </ConversationContext.Provider>
+        </ConversationsContext.Provider>
     )
 }
 

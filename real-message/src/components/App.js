@@ -1,5 +1,6 @@
 import React from 'react'
 import { ContactsProvider } from '../context/ContactsProvider';
+import { ConversationsProvider } from '../context/ConversationProvider';
 import useLocalStorage from '../hooks/useLocalStorage';
 import DashBoard from './DashBoard';
 import Login from './Login'
@@ -7,11 +8,13 @@ import Login from './Login'
 function App() {
 
   // stores all the state for the Id that is shared all accross the application
-  const [id, setId] = useLocalStorage()
+  const [id, setId] = useLocalStorage('id')
 
   const dashboard = (
     <ContactsProvider>
-      <DashBoard id={id}/>
+      <ConversationsProvider>
+        <DashBoard id={id}/>
+      </ConversationsProvider>
     </ContactsProvider>
   )
 
