@@ -14,7 +14,6 @@ function Contact() {
                     {contact.name}
                 </ListGroup.Item>
             ))}
-
         </ListGroup>
     )
 }

@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext, useState} from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
 import { useContacts } from './ContactsProvider'
 
@@ -12,8 +12,10 @@ export function useConversations(){
 
 export function ConversationsProvider({children}) {
 
-    const[conversations,SetConversations] = useLocalStorage('conversations',[]) // This will be the Array that all the conversation
+    const[conversations,SetConversations] = useLocalStorage('conversations',[]) // This will be the Array that ALL the conversation
     // information will be stored in
+
+    const [selectConversationIndex, SetSelectedConversationIndex] = useState(0); // This State is used to Store Information on SELECTED Conversation
 
     const { contacts } = useContacts()
 
@@ -24,7 +26,7 @@ export function ConversationsProvider({children}) {
         })
     }
 
-    const formattedConversations = conversations.map(conversations =>{
+    const formattedConversations = conversations.map(conversations, index =>{
         // This is to show and Display the Information of those we are having a Conversation with
         const recipients = conversations.recipients.map(recipient => {
             const contact = contacts.find(contact => {
@@ -38,11 +40,15 @@ export function ConversationsProvider({children}) {
             // but don't have them as a Contact then only there Phone Number will be Displayed.
             return { id: recipient, name }
         })
-        return {...conversations, recipients}
+        const selected = index === selectedConversationIndex // Becomes an Identifyer to Tell us whether or Not a Conversation is Selected
+        // Basically it to Highlight it. 
+
+        return {...conversations, recipients , selected}
     })
 
     const value = {
         conversations: formattedConversations,
+        selectConversationIndex: SetSelectedConversationIndex,
         createConversation
     }
 
