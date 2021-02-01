@@ -17,23 +17,21 @@ function NewConversationModal({closeModal}) {
         closeModal()
     }
 
-    function handleCheckboxChange(contactId){
+    function handleCheckboxChange(contactId) {
         setSelectedContactIds(prevSelectedContactIds => {
             // first we determine if our contactId is already in the list
-            if (prevSelectedContactIds.inlcudes(contactId)){
-                // so if it is included we want to remove it
-                return prevSelectedContactIds.filter(prevId =>{
-                    // Then we check if the previous id is equal to the contact Id
-                    return contactId !== prevId // here it keeps all the ids not equal to the contact id and removes the 
-                    // contact id that matches
-                })
-
-            } else{
-                // this is to remove it form the list
-                return [...prevSelectedContactIds , contactId]
-            }
+          if (prevSelectedContactIds.includes(contactId)) {
+              // so if it is included we want to remove it
+            return prevSelectedContactIds.filter(prevId => {
+                 // Then we check if the previous id is equal to the contact Id
+              return contactId !== prevId // here it keeps all the ids not equal to the contact id and removes the contact id that matches
+            })
+          } else {
+              // this is to remove it form the list
+            return [...prevSelectedContactIds, contactId]
+          }
         })
-    }
+      }
 
     return (
         <>  
@@ -45,9 +43,9 @@ function NewConversationModal({closeModal}) {
                     <Form.Group controlId={contact.id} key={contact.id}>
                         <Form.Check
                             type="checkbox"
-                            value={selectedContactIds.includes(contact.id)} // Becomes tru or false based on wheter or not we have selected this contact id
+                            value={selectedContactIds.includes(contact.id)} // Becomes true or false based on wheter or not we have selected this contact id
                             label = {contact.name}
-                            onChange ={() => handleCheckboxChange(contact.id)}
+                            onChange ={() => handleCheckboxChange(contact.id)} // To idenify which contact we are working with
                         />
                     </Form.Group>
                 ))}
