@@ -10,7 +10,7 @@ export function useConversations(){
     return useContext(ConversationsContext)
 }
 
-export function ConversationsProvider({children}) {
+export function ConversationsProvider({id, children}) {
 
     const[conversations,setConversations] = useLocalStorage('conversations',[]) // This will be the Array that ALL the conversation
     // information will be stored in
@@ -24,6 +24,48 @@ export function ConversationsProvider({children}) {
         setConversations(prevConversations =>{
             return[...prevConversations,{recipients, message : []}]
         })
+    }
+
+    function addMessageToConversation({recipients, text, sender})
+    {
+        // first we need to get out previous conversations and determine if any changes have been made ie an empty conversation
+        // having new text
+        setConversations(prevConversations =>{
+            let madeChange = false
+            const newMessage = {sender , text}
+            const newConversations = prevConversations.map
+
+            (conversations =>{
+                // next we are trying to determine if our recipents aarray matches the recipents array of any previous conversation
+                // the function arrayEquality simply takes 2 arrays and sees if they are the same
+                if (arrayEquality(conversation.recipients, recipient))
+                {
+                    madeChange = true
+
+
+                    // what happens here is that it returns our conversations i.e our previous messages and adds our new messages at the end
+                    return{...conversations,message:conversations.messages, newMessage
+                    }
+                }
+                 return conversations
+            })
+
+            if(madeChange){
+                return conversations
+            }else{
+               return[...prevConversations, 
+                {recipients, messages: [newMessage]}
+
+             ] 
+            }
+        })
+    }
+
+    function sendMessage({recipients, message})
+    {
+        // this is here to call the addmessage fucntion to forward any of our messages
+        // bey adding it to value we can export it out
+        addMessageToConversation({recipients, text , sender: id})
     }
 
     const formattedConversations = conversations.map((conversation, index) =>{
@@ -50,8 +92,20 @@ export function ConversationsProvider({children}) {
         conversations: formattedConversations,
         selectedConversation : formattedConversations 
         [selectedConversationIndex],
+        sendMessage,
         selectConversationIndex: setSelectedConversationIndex,
         createConversation
+    }
+
+    function arrayEquality( a , b){
+        if (a.length !== b.length) return false
+
+        a.sort()
+        b.sort()
+
+        return a.every((element, index) =>{
+            return element === b[index]
+        })
     }
 
     return (
