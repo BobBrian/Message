@@ -21,7 +21,23 @@ function OpenConversation() {
     return (
         <div className="d-flex flex-column flex-grow-1">
             <div className="flex-grow-1 overflow-auto">
+                {/* Now that we have ensures our Message are goign to appear on the fornt page we have to implement them */}
+                <div className="d-flex flex-column align-items-start justify-content-end px-3">
+                    {/*Code to Display Our Message */}
+                    {selectedConversation.message.map((message, index) =>{
 
+                        return (
+                        <div key={index} className={`my-1 d-flex flex-column ${message.formMe ? 'align-self-end': ''}`}>
+                            <div className={`rounded px-2 py-1 ${message.form ? 'bg-primary text-white' : 'border'}`}>
+                                {message.text}
+                            </div>
+                            <div className={`text-muted small ${message.formMe ? 'text-right': ''}`}>
+                                {message.formMe ? 'You': message.senderName}
+                            </div>
+                        </div>
+                        )
+                    })}
+                </div>
             </div>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="m-2">

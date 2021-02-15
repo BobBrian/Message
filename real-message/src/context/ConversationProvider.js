@@ -77,15 +77,27 @@ export function ConversationsProvider({id, children}) {
                 return contact.id === recipient
             })
             const name = (contact && contact.name) || recipient
-            // This is for  Physically Displaying the Name of the Searched Contact , if it has a Name Associated with the ID , then 
-            // That to will be Displayed but if not then just the ID number , Think How in Whatsapp if you add a Someone there
-            // but don't have them as a Contact then only there Phone Number will be Displayed.
+            // this will display the names but those will be visiable in the page elements
             return { id: recipient, name }
         })
+        // this will allow us to see exactly who sent messages meaning that it will display the names directly on the page
+        const messages = conversation.messages.map(message => {
+            const contact = contacts.find(contact => {
+                
+                return contact.id === message.sender
+            })
+            // this set messages to either us or another sender
+            const name = (contact && contact.name) || message.sender
+            // this is to display If the User sent the message themselves
+            const fromMe = id === message.sender
+            return{...message, senderName: name, fromMe }
+        })
+
         const selected = index === selectedConversationIndex // Becomes an Identifyer to Tell us whether or Not a Conversation is Selected
         // Basically it to Highlight it. 
 
-        return {...conversation, recipients , selected}
+        return {...conversation, messages, recipients , selected} // when we access messages we can access the Sendername and
+        // formMe Properties
     })
 
     const value = {
@@ -104,6 +116,8 @@ export function ConversationsProvider({id, children}) {
         b.sort()
 
         return a.every((element, index) =>{
+            // we loop trough all elemets of a to see if they are exactly equal to every element in b
+            // at the exact same index position
             return element === b[index]
         })
     }
