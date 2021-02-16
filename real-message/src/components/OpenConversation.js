@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef , useEffect, useCallback} from 'react'
 import { Form , InputGroup, Button } from 'react-bootstrap'
 import { useConversations } from '../context/ConversationProvider'
 
@@ -6,7 +6,22 @@ function OpenConversation() {
 
     const [text, setText] = useState('') // State to store all text Messages
 
+    const lastMessageRef = useRef() // The Purpose of this constant is that it is 
+    // going to refrence our Last Messages so that as soon as we type messages we are
+    // automatically scrolled down to the end of the page
+
+    const setRef = useCallback(node =>{
+        // the usecallback is used to return a memorized version of a callback function 
+        // which in this case is scrollintoview
+        if (node){
+            node.scrollIntoView({ smooth: true })
+        }
+        
+    }, []);
+
     const { sendmessage, selectedConversation } = useConversations()
+
+
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -25,13 +40,21 @@ function OpenConversation() {
                 <div className="d-flex flex-column align-items-start justify-content-end px-3">
                     {/*Code to Display Our Message */}
                     {selectedConversation.message.map((message, index) =>{
+                        
+                        const lastMessage = selectedConversation.messages.length - 1 === index
 
                         return (
-                        <div key={index} className={`my-1 d-flex flex-column ${message.formMe ? 'align-self-end': ''}`}>
+                        <div    
+                                ref={ lastMessage ? setRef: null } 
+                                key={index} className={`my-1 d-flex flex-column
+                                ${message.formMe ? 'align-self-end': ''}`}>
+                                {/*Determines whether the Message is form the User and if it is , Diplay there Name change the Text box to Blue and Alignes it to the Right */}
                             <div className={`rounded px-2 py-1 ${message.form ? 'bg-primary text-white' : 'border'}`}>
                                 {message.text}
                             </div>
                             <div className={`text-muted small ${message.formMe ? 'text-right': ''}`}>
+                                 {/*Determines if a Message if form the User and if is not it is diaplyed in white and Aligned to the 
+                                    Left */}
                                 {message.formMe ? 'You': message.senderName}
                             </div>
                         </div>
