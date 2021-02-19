@@ -31,7 +31,7 @@ function NewConversationModal({closeModal}) {
             return [...prevSelectedContactIds, contactId]
           }
         })
-      }
+    }
 
     return (
         <>  

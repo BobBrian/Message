@@ -1,6 +1,7 @@
 import React from 'react'
 import useLocalStorage from '../hooks/useLocalStorage';
 import { ContactsProvider } from '../context/ContactsProvider';
+import { ConversationsProvider} from '../context/ConversationsProvider';
 import DashBoard from './DashBoard';
 import Login from './Login'
 
@@ -10,7 +11,9 @@ function App() {
 
   const dashboard = (
     <ContactsProvider>
+      <ConversationsProvider id={id}>
         <DashBoard id={id}/>
+      </ConversationsProvider>
     </ContactsProvider>
   )
 
