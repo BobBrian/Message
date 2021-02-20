@@ -3,16 +3,16 @@ import SideBar from './SideBar'
 import OpenConversation from './OpenConversation'
 import { useConversations } from '../context/ConversationsProvider'
 
-function DashBoard({id}) {
+function DashBoard({ id }) {
 
-    const { selectedCnversation} = useConversations()
+    const { selectedConversation} = useConversations()
 
     return (
         
 
         <div className="d-flex" style={{height:'100vh'}}> 
                 <SideBar id= {id} />
-                {selectedCnversation && <OpenConversation/>}
+                {selectedConversation && <OpenConversation/>}
         </div>
         
     )

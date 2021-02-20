@@ -16,7 +16,7 @@ function Conversation() {
                 active={conversation.selected} // Allows us to Click on and Open our Conversation
                 >
                      {/*This is where the Actual Conversation will be Rendered and Saved*/}
-                    {conversation.recipients.map(r => r.name).join(',')} 
+                    {conversation.recipients.map(r => r.name).join(', ')} 
                     {/*What this does is that it takes all the names of recicpents that where provided in the Conversation Provider
                       and dispalys them on the sidebar*/}
                 </ListGroup.Item>
