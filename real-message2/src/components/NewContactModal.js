@@ -18,6 +18,9 @@ function NewContactModal({closeModal}) {
 
     return (
         <>
+            
+            {/*What This Does is that Once The Contact Button is Pressed it will create a Mini Page That will Allow the User
+            To Add Contact Data*/}
             <Modal.Header closeButton>Create New Contact</Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSumbit}>
