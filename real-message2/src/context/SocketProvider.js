@@ -7,17 +7,21 @@ export function useSocket(){
     return useContext(SocketContext)
 }
 
-export function SocketProvider({id, children}) {
+export function SocketProvider({ id, children }) {
 
     const [socket,setSocket] = useState()
 
     useEffect(() => {
-        const newsocket = io('http://localhost:5000', 
-        { query: {id } } 
+        const newSocket = io('http://localhost:5000', 
+        { query: { id } } 
       )
-      setSocket(newsocket)
 
-      return () => newsocket.close()
+      setSocket(newSocket)
+
+      return () => newSocket.close()// used to close old sockets and create new one as to avoid multiple sockets open leading
+      // to messages being duplicated
+
+
     }, [id])
 
 

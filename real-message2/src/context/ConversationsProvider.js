@@ -23,8 +23,7 @@ export function ConversationsProvider({id, children}) {
         })
     }
 
-    const addMessageToConversation = useCallback(({recipients, text , sender}) =>
-    {
+    const addMessageToConversation = useCallback(({recipients, text , sender}) => {
         // first we need to get  previous conversations and determine if any changes have been made
         // for example an empty conversation having new text
         setConversations(prevConversations => {
@@ -62,15 +61,19 @@ export function ConversationsProvider({id, children}) {
     },[setConversations])
 
     useEffect(() => {
+
+        //
+        //
         if (socket == null) return
 
-        socket.on('receive-message', addMessageToConversation)
+        socket.on('receive-message', addMessageToConversation) // allows for the message sent to the other page to be displayed
 
-        return () => socket.off('receive-message')
+        return () => socket.off('receive-message') 
+
     },[socket , addMessageToConversation])
 
     function sendMessage(recipients, text){
-        socket.emit('send-message',{ recipients, text})
+        socket.emit('send-message',{ recipients, text}) // grants us access to our socket , allowing us to emit messages to another page
 
         //this here to call the addmessage function forward to any of our messages
         //by adding it to value we can export it out.

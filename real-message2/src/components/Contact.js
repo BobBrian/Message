@@ -1,3 +1,4 @@
+// This will display the List of Contacts
 import React from 'react'
 import {useContacts} from '../context/ContactsProvider'
 import {ListGroup} from 'react-bootstrap'

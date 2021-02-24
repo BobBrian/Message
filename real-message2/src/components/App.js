@@ -16,7 +16,7 @@ function App() {
       <ConversationsProvider id={id}>
         <DashBoard id={id}/>
       </ConversationsProvider>
-    </ContactsProvider>
+     </ContactsProvider>
     </SocketProvider>
     
   )
